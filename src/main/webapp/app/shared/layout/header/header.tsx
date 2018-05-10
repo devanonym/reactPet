@@ -157,7 +157,7 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
             <BrandIcon />
             <span className="brand-title">ReactPet</span>
             <span className="navbar-version">{appConfig.VERSION}</span>
-            <Button color="danger" style={{ display: isAuthenticated ? 'inline-block' : 'none' }} outline onClick={sideMenuToggle}>Toggle Menu</Button>
+            <Button color="danger" style={{ display: isAuthenticated ? 'inline-block' : 'none' }} outline onClick={sideMenuToggle}>User Details</Button>
           </NavbarBrand>
           <Collapse isOpen={this.state.menuOpen} navbar>
             <Nav className="ml-auto" navbar>

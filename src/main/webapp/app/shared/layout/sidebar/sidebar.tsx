@@ -21,7 +21,7 @@ export default class Sidebar extends React.Component<ISidebarProps> {
                     <ul className="sidebar-nav">
                         <li className="sidebar-brand">
                             <a href="#">
-                                User Profile
+                                User Details
                             </a>
                         </li>
                         <li>
