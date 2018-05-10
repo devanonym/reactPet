@@ -1,6 +1,10 @@
+import './sidebar.scss';
+
 import * as React from 'react';
 import { connect } from 'react-redux';
-import './sidebar.scss';
+import { NavLink as Link } from 'react-router-dom';
+
+import SidebarLink from './sidebar.link';
 
 export interface ISidebarProps {
     isAuthenticated: boolean;
@@ -17,29 +21,14 @@ export class Sidebar extends React.Component<ISidebarProps> {
                     <ul className="sidebar-nav">
                         <li className="sidebar-brand">
                             <a href="#">
-                                Profile
+                                User Profile
                             </a>
                         </li>
                         <li>
-                            <a href="#">Dashboard</a>
+                            <SidebarLink to="/admin/user-management" title="User management"/>
                         </li>
                         <li>
-                            <a href="#">Shortcuts</a>
-                        </li>
-                        <li>
-                            <a href="#">Overview</a>
-                        </li>
-                        <li>
-                            <a href="#">Events</a>
-                        </li>
-                        <li>
-                            <a href="#">About</a>
-                        </li>
-                        <li>
-                            <a href="#">Services</a>
-                        </li>
-                        <li>
-                            <a href="#">Contact</a>
+                            <SidebarLink to="/entity/pet" title="Pet"/>
                         </li>
                     </ul>
                 </div>
@@ -52,4 +41,4 @@ const mapStateToProps = ({ sidebar }) => ({
     isOpen: sidebar.isSideMenuOpen
   });
 
-  export default connect(mapStateToProps)(Sidebar);
+export default connect(mapStateToProps)(Sidebar);

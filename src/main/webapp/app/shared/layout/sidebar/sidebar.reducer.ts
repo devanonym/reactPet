@@ -1,5 +1,6 @@
 export const ACTION_TYPES = {
-    TOGGLE_SIDEMENU: 'TOGGLE_SIDEMENU'
+    TOGGLE_SIDEMENU: 'TOGGLE_SIDEMENU',
+    SIDEMENU_CLOSE: 'SIDEMENU_CLOSE'
 };
 
 const initialState = {
@@ -15,6 +16,11 @@ export default (state = initialState, action) => {
         ...state,
         isSideMenuOpen: !state.isSideMenuOpen
       };
+    case ACTION_TYPES.SIDEMENU_CLOSE:
+      return {
+        ...state,
+        isSideMenuOpen: false
+      };
     default:
       return state;
   }
@@ -24,4 +30,8 @@ export default (state = initialState, action) => {
 
 export const sideMenuOpen = () => ({
     type: ACTION_TYPES.TOGGLE_SIDEMENU
+});
+
+export const sideMenuClose = () => ({
+    type: ACTION_TYPES.SIDEMENU_CLOSE
 });
