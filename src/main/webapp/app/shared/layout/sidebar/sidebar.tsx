@@ -28,6 +28,9 @@ export default class Sidebar extends React.Component<ISidebarProps> {
                             <SidebarLink to="/admin/user-management" title="User management"/>
                         </li>
                         <li>
+                            <SidebarLink to="/entity/info" title="Info"/>
+                        </li>
+                        <li>
                             <SidebarLink to="/entity/pet" title="Pet"/>
                         </li>
                     </ul>
