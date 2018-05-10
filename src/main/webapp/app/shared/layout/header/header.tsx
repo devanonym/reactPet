@@ -30,7 +30,7 @@ export interface IHeaderProps {
   isInProduction: boolean;
   isSwaggerEnabled: boolean;
   isSideMenuOpen: boolean;
-  sideMenuOpen: any;
+  sideMenuToggle: any;
 }
 
 export interface IHeaderState {
@@ -60,7 +60,7 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
   };
 
   render() {
-    const { isAuthenticated, isAdmin, isSideMenuOpen, sideMenuOpen } = this.props;
+    const { isAuthenticated, isAdmin, isSideMenuOpen, sideMenuToggle } = this.props;
     const entityMenuItems = [
       <DropdownItem tag={Link} key="pet" to="/entity/pet">
         <FontAwesomeIcon icon="asterisk" />&nbsp; Pet
@@ -157,7 +157,7 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
             <BrandIcon />
             <span className="brand-title">ReactPet</span>
             <span className="navbar-version">{appConfig.VERSION}</span>
-            <Button disabled={!isAuthenticated} color="danger" outline onClick={sideMenuOpen}>Toggle Menu</Button>
+            <Button disabled={!isAuthenticated} color="danger" outline onClick={sideMenuToggle}>Toggle Menu</Button>
           </NavbarBrand>
           <Collapse isOpen={this.state.menuOpen} navbar>
             <Nav className="ml-auto" navbar>

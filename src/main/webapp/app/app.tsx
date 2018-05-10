@@ -8,7 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import { getSession } from 'app/shared/reducers/authentication';
 import { getProfile } from 'app/shared/reducers/application-profile';
-import { sideMenuOpen } from 'app/shared/layout/sidebar/sidebar.reducer';
+import { sideMenuToggle } from 'app/shared/layout/sidebar/sidebar.reducer';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
 import Header from 'app/shared/layout/header/header';
 import Footer from 'app/shared/layout/footer/footer';
@@ -25,7 +25,7 @@ export interface IAppProps {
   getSession: Function;
   getProfile: Function;
   isSideMenuOpen: boolean;
-  sideMenuOpen: Function;
+  sideMenuToggle: Function;
 }
 
 export class App extends React.Component<IAppProps> {
@@ -41,7 +41,8 @@ export class App extends React.Component<IAppProps> {
         <div>
           <Sidebar
               isAuthenticated={this.props.isAuthenticated}
-              isSideMenuOpen={this.props.isSideMenuOpen}/>
+              isSideMenuOpen={this.props.isSideMenuOpen}
+          />
           <div className="app-container" style={{ paddingTop }}>
             <ToastContainer position={toast.POSITION.BOTTOM_CENTER} />
             <Header
@@ -51,7 +52,7 @@ export class App extends React.Component<IAppProps> {
               isInProduction={this.props.isInProduction}
               isSwaggerEnabled={this.props.isSwaggerEnabled}
               isSideMenuOpen={this.props.isSideMenuOpen}
-              sideMenuOpen={this.props.sideMenuOpen}
+              sideMenuToggle={this.props.sideMenuToggle}
             />
             <div id="page-content-wrapper">
               <div className="container-fluid view-container" id="app-view-container">
@@ -77,6 +78,6 @@ const mapStateToProps = ({ authentication, applicationProfile, sidebar }) => ({
   isSwaggerEnabled: applicationProfile.isSwaggerEnabled
 });
 
-const mapDispatchToProps = { getSession, getProfile, sideMenuOpen };
+const mapDispatchToProps = { getSession, getProfile, sideMenuToggle };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

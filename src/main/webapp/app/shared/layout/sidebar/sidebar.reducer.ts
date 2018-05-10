@@ -28,7 +28,7 @@ export default (state = initialState, action) => {
 
 // Actions
 
-export const sideMenuOpen = () => ({
+export const sideMenuToggle = () => ({
     type: ACTION_TYPES.TOGGLE_SIDEMENU
 });
 
