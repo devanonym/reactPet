@@ -8,7 +8,7 @@
     "packageName": "com.mycompany.myapp",
     "packageFolder": "com/mycompany/myapp",
     "serverPort": "8080",
-    "authenticationType": "oauth2",
+    "authenticationType": "jwt",
     "cacheProvider": "no",
     "enableHibernateCache": false,
     "websocket": "spring-websocket",
@@ -26,6 +26,7 @@
     "applicationType": "monolith",
     "testFrameworks": [],
     "jhiPrefix": "jhi",
-    "enableTranslation": false
+    "enableTranslation": false,
+    "jwtSecretKey": "fa10acc894e882b1f9cc12b6c595cd74184aa9f0"
   }
 }

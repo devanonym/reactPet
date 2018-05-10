@@ -8,6 +8,8 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import { getSession } from 'app/shared/reducers/authentication';
 import { getProfile } from 'app/shared/reducers/application-profile';
+import { sideMenuOpen } from 'app/shared/layout/sidebar/sidebar.reducer';
+import Sidebar from 'app/shared/layout/sidebar/sidebar';
 import Header from 'app/shared/layout/header/header';
 import Footer from 'app/shared/layout/footer/footer';
 import { hasAnyAuthority } from 'app/shared/auth/private-route';
@@ -22,6 +24,8 @@ export interface IAppProps {
   isSwaggerEnabled: boolean;
   getSession: Function;
   getProfile: Function;
+  isSideMenuOpen: boolean;
+  sideMenuOpen: Function;
 }
 
 export class App extends React.Component<IAppProps> {
@@ -34,20 +38,29 @@ export class App extends React.Component<IAppProps> {
     const paddingTop = '60px';
     return (
       <Router>
-        <div className="app-container" style={{ paddingTop }}>
-          <ToastContainer position={toast.POSITION.BOTTOM_CENTER} />
-          <Header
-            isAuthenticated={this.props.isAuthenticated}
-            isAdmin={this.props.isAdmin}
-            ribbonEnv={this.props.ribbonEnv}
-            isInProduction={this.props.isInProduction}
-            isSwaggerEnabled={this.props.isSwaggerEnabled}
-          />
-          <div className="container-fluid view-container" id="app-view-container">
-            <Card className="jh-card">
-              <AppRoutes />
-            </Card>
-            <Footer />
+        <div>
+          <Sidebar
+              isAuthenticated={this.props.isAuthenticated}
+              isSideMenuOpen={this.props.isSideMenuOpen}/>
+          <div className="app-container" style={{ paddingTop }}>
+            <ToastContainer position={toast.POSITION.BOTTOM_CENTER} />
+            <Header
+              isAuthenticated={this.props.isAuthenticated}
+              isAdmin={this.props.isAdmin}
+              ribbonEnv={this.props.ribbonEnv}
+              isInProduction={this.props.isInProduction}
+              isSwaggerEnabled={this.props.isSwaggerEnabled}
+              isSideMenuOpen={this.props.isSideMenuOpen}
+              sideMenuOpen={this.props.sideMenuOpen}
+            />
+            <div id="page-content-wrapper">
+              <div className="container-fluid view-container" id="app-view-container">
+                <Card className="jh-card">
+                  <AppRoutes />
+                </Card>
+                <Footer/>
+              </div>
+            </div>
           </div>
         </div>
       </Router>
@@ -55,7 +68,8 @@ export class App extends React.Component<IAppProps> {
   }
 }
 
-const mapStateToProps = ({ authentication, applicationProfile }) => ({
+const mapStateToProps = ({ authentication, applicationProfile, sidebar }) => ({
+  isSideMenuOpen: sidebar.isSideMenuOpen,
   isAuthenticated: authentication.isAuthenticated,
   isAdmin: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.ADMIN]),
   ribbonEnv: applicationProfile.ribbonEnv,
@@ -63,6 +77,6 @@ const mapStateToProps = ({ authentication, applicationProfile }) => ({
   isSwaggerEnabled: applicationProfile.isSwaggerEnabled
 });
 
-const mapDispatchToProps = { getSession, getProfile };
+const mapDispatchToProps = { getSession, getProfile, sideMenuOpen };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

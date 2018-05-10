@@ -13,14 +13,14 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  Button
 } from 'reactstrap';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 
 import { NavLink as Link } from 'react-router-dom';
 import LoadingBar from 'react-redux-loading-bar';
 
-import { getLoginUrl } from 'app/shared/util/url-utils';
 import appConfig from 'app/config/constants';
 
 export interface IHeaderProps {
@@ -29,6 +29,8 @@ export interface IHeaderProps {
   ribbonEnv: string;
   isInProduction: boolean;
   isSwaggerEnabled: boolean;
+  isSideMenuOpen: boolean;
+  sideMenuOpen: any;
 }
 
 export interface IHeaderState {
@@ -58,13 +60,19 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
   };
 
   render() {
-    const { isAuthenticated, isAdmin } = this.props;
+    const { isAuthenticated, isAdmin, isSideMenuOpen, sideMenuOpen } = this.props;
     const entityMenuItems = [
+      <DropdownItem tag={Link} key="pet" to="/entity/pet">
+        <FontAwesomeIcon icon="asterisk" />&nbsp; Pet
+      </DropdownItem>,
       /* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */
       <span key="dummy-placeholder" /> /* workaround to avoid error when there are no entities */
     ];
     /* jhipster-needle-add-element-to-menu - JHipster will add new menu items here */
     const adminMenuItems = [
+      <DropdownItem tag={Link} key="user-management" to="/admin/user-management">
+        <FontAwesomeIcon icon="user" /> User Management
+      </DropdownItem>,
       <DropdownItem tag={Link} key="tracker" to="/admin/tracker">
         <FontAwesomeIcon icon="eye" /> Tracker
       </DropdownItem>,
@@ -95,14 +103,23 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
     const accountMenuItems = [];
     if (isAuthenticated) {
       accountMenuItems.push(
+        <DropdownItem tag={Link} key="settings" to="/account/settings">
+          <FontAwesomeIcon icon="wrench" /> Settings
+        </DropdownItem>,
+        <DropdownItem tag={Link} key="password" to="/account/password">
+          <FontAwesomeIcon icon="clock" /> Password
+        </DropdownItem>,
         <DropdownItem tag={Link} key="logout" to="/logout">
           <FontAwesomeIcon icon="sign-out-alt" /> Logout
         </DropdownItem>
       );
     } else {
       accountMenuItems.push(
-        <DropdownItem tag="a" key="login" href={getLoginUrl()}>
+        <DropdownItem tag={Link} key="login" to="/login">
           <FontAwesomeIcon icon="sign-in-alt" /> Login
+        </DropdownItem>,
+        <DropdownItem tag={Link} key="register" to="/register">
+          <FontAwesomeIcon icon="sign-in-alt" /> Register
         </DropdownItem>
       );
     }
@@ -133,12 +150,14 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
       <div id="app-header">
         {this.renderDevRibbon()}
         <LoadingBar className="loading-bar" />
-        <Navbar dark expand="sm" fixed="top" className="jh-navbar">
+        <Navbar dark expand="sm" fixed="top"
+            style={{ 'z-index': isSideMenuOpen ? '10' : '1300' }} className="jh-navbar">
           <NavbarToggler aria-label="Menu" onClick={this.toggleMenu} />
           <NavbarBrand tag={Link} to="/" className="brand-logo">
             <BrandIcon />
             <span className="brand-title">ReactPet</span>
             <span className="navbar-version">{appConfig.VERSION}</span>
+            <Button disabled={!isAuthenticated} color="danger" outline onClick={sideMenuOpen}>Toggle Menu</Button>
           </NavbarBrand>
           <Collapse isOpen={this.state.menuOpen} navbar>
             <Nav className="ml-auto" navbar>
