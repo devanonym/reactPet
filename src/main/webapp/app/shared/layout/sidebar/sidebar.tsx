@@ -11,12 +11,12 @@ export interface ISidebarProps {
     isSideMenuOpen: boolean;
   }
 
-export class Sidebar extends React.Component<ISidebarProps> {
+export default class Sidebar extends React.Component<ISidebarProps> {
 
     render() {
         const { isAuthenticated, isSideMenuOpen } = this.props;
         return (
-            <div id="wrapper" className={isSideMenuOpen ? 'toggled' : '' }>
+            <div id="wrapper" className={isSideMenuOpen && isAuthenticated ? 'toggled' : '' }>
                 <div id="sidebar-wrapper">
                     <ul className="sidebar-nav">
                         <li className="sidebar-brand">
@@ -36,9 +36,3 @@ export class Sidebar extends React.Component<ISidebarProps> {
         );
     }
 }
-
-const mapStateToProps = ({ sidebar }) => ({
-    isOpen: sidebar.isSideMenuOpen
-  });
-
-export default connect(mapStateToProps)(Sidebar);
